@@ -1,7 +1,13 @@
-const io=require('socket.io')(8080,{
-    cors:['*']
-})
+const { Server }=require('socket.io');
 
-io.on('connection',(socket)=>{
-    console.log(socket.id);
-})
+const io = new Server(8000);
+
+io.on("connection", (socket) => {
+  // send a message to the client
+  socket.emit("hello from server", 1, "2", { 3: Buffer.from([4]) });
+
+  // receive a message from the client
+  socket.on("hello from client", (...args) => {
+    // ...
+  });
+});

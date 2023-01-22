@@ -1,15 +1,9 @@
-const wsserver=require('websocket');
-const http=require('http')
+const {WebSocketServer} = require('ws');
 const PORT=8000;
 
-const server=http.createServer();
-server.listen(PORT);
-console.log('server running on port:'+PORT);
+const server=new WebSocketServer({port:PORT})
 
-const socketserver=wsserver.server({
-    port:PORT
-})
-
-socketserver.on('connect',(socket)=>{
-    console.log('connected user :');
+server.on('connection',(socket)=>{
+    console.log("user connected");
+    socket.send(JSON.stringify({type:"hello message"}))
 })

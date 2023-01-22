@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { w3cwebsocket } from 'websocket';
-import { io } from 'socket.io-client';
 
 export default function Home() {
 // const client= io('http://localhost:8080')

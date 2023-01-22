@@ -1,13 +1,14 @@
 import { useEffect } from 'react';
-// import { w3cwebsocket } from 'websocket';
+import { w3cwebsocket } from 'websocket';
 import { io } from 'socket.io-client';
 
 export default function Home() {
-const client=new io('http://localhost:8080')
+// const client= io('http://localhost:8080')
+const client= new w3cwebsocket("ws://localhost:8000")
 useEffect(()=>{
-    client.onopen=()=>{
-        console.log("connect to ws server");
-    };
+    client.onopen =(socket)=>{
+        console.log('you are connected to server');
+    }
 },[])
 
   return (

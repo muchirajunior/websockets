@@ -1,18 +1,38 @@
-import { useEffect } from 'react';
-import { w3cwebsocket } from 'websocket';
+import { useEffect,useState } from 'react';
+import { client } from '../socket';
+
 
 export default function Home() {
-// const client= io('http://localhost:8080')
-const client= new w3cwebsocket("ws://localhost:8000")
+
+const [messages,setMessages]=useState([])
 useEffect(()=>{
-    client.onopen =(socket)=>{
-        console.log('you are connected to server');
-    }
+    client.onopen=('connection', (socket)=>{
+      console.log("connected to server");
+      
+    })
+   
 },[])
 
+const sendMessage=()=>{
+
+  client.send(JSON.stringify({message:"hello from client"}));
+
+}
+
+ client.onmessage=((message)=>{
+  setMessages([...messages,JSON.parse(message.data)])
+  console.log(message.data);
+ })
+
+
   return (
-    <div className='container p-3'>
-        <button className='btn btn-primary'>send message</button>
+    <div className='container p-3 bg-primary-subtle border border-primary-subtle rounded'>
+        <button className='btn btn-primary' onClick={sendMessage}>send message</button>
+        <ul class="list-group">
+          { messages.map((message)=>  <li class="list-group-item">{message.message}</li>) }
+         
+          
+        </ul>
     </div>
   )
 }
